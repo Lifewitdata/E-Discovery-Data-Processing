@@ -1,122 +1,81 @@
-E-Discovery Data Processing and Analysis Pipeline
-This project demonstrates an end-to-end simulated e-discovery workflow using Python. It covers the entire lifecycle from generating a large dataset of email records to processing, cleaning, storing, and finally analyzing the information through reports and a visual dashboard.
+# 📂 E-Discovery Data Processing and Analysis Pipeline
 
-🎯 Project Goal
-The primary goal of this project is to showcase a robust pipeline for handling Electronically Stored Information (ESI) in a legal context. It highlights best practices for data normalization, quality assurance, text preprocessing, and creating insightful analytics to aid in document review.
 
-📜 Description
-E-discovery (electronic discovery) is the process of identifying and producing electronically stored information for legal cases. This notebook simulates key stages of this process, providing a framework for managing large volumes of document metadata and text efficiently.
+This project demonstrates an **end-to-end simulated e-discovery workflow** using Python. It covers the entire lifecycle: generating a large dataset of email records → processing → cleaning → storing → analyzing → reporting → visualization.
 
-✨ Key Features
-Synthetic Data Generation: Creates a dataset of 50,000 realistic-looking fake email records using the Faker library.
+---
 
-Relational Database Schema: Normalizes the data into a relational schema with Documents, Custodians, and Emails tables using an in-memory SQLite database via SQLAlchemy.
+## 🎯 Project Goal
+Showcase a robust **data pipeline** for handling **Electronically Stored Information (ESI)** in legal contexts.  
+Focus areas:
+- Data normalization & quality assurance  
+- Text preprocessing with NLP  
+- Insightful analytics & visual dashboards  
 
-Comprehensive Data Cleaning:
+---
 
-Handles missing data by filling null values with sensible defaults.
+## 📜 Description
+**E-discovery (electronic discovery)** involves identifying, processing, and producing electronically stored information (ESI) for legal use.  
+This notebook simulates those steps, providing a **framework for managing large-scale document metadata and text** efficiently.
 
-Ensures data integrity by removing duplicate records.
+---
 
-Standardizes inconsistent date formats.
+## ✨ Key Features
+- 🔹 **Synthetic Data Generation** with `Faker` (~50,000 records)  
+- 🔹 **Normalized Relational Database Schema** using `SQLAlchemy` + SQLite  
+- 🔹 **Data Cleaning** (null handling, duplicates, date standardization)  
+- 🔹 **NLP Preprocessing** (tokenization, stopword removal, punctuation cleaning via `NLTK`)  
+- 🔹 **Automated QA Checks** with error logging into an `Error_Log` table  
+- 🔹 **Analytics & Visualization** (`Matplotlib` + `Seaborn`)  
+- 🔹 **Multi-format Export** (`CSV`, `Parquet`, `JSON`)  
 
-Natural Language Processing (NLP): Applies basic text preprocessing to email bodies, including lowercasing, removing punctuation, and filtering out common English stop words using NLTK.
+---
 
-Automated Quality Assurance: Implements a data quality check function to automatically flag records with missing metadata. These issues are logged into a dedicated Error_Log table for review and remediation.
+## ⚙️ Workflow Overview
+1. **Setup** → Import libraries & initialize DB  
+2. **Data Generation** → Create fake dataset (`Faker`)  
+3. **Database & ETL** → Normalize & load into SQL tables  
+4. **Cleaning & Preprocessing** → Fix missing values & clean text  
+5. **Quality Checks** → Log issues into `Error_Log`  
+6. **Analysis & Visualization** → Build analytical dashboard  
+7. **Export** → Save outputs in multiple formats  
 
-Reporting & Visualization: Generates summary statistics and a visual dashboard using Matplotlib and Seaborn to provide quick insights into the dataset.
+---
 
-Data Export: Exports the final, processed data into multiple common formats (CSV, Parquet, and JSON).
+## 🗂️ Database Schema
+**Tables:**  
+- **`Documents`** → Metadata (`Document ID`, `Date`, `File Type`)  
+- **`Custodians`** → Custodian info (`Custodian ID`, `Name`)  
+- **`Emails`** → Core email data (`Email ID`, linked to `Documents` & `Custodians`)  
+- **`Error_Log`** → QA issues (`Error ID`, `Document ID`, `Error Type`)  
 
-⚙️ Workflow Overview
-The notebook follows a logical data pipeline structure:
+---
 
-Setup: Imports libraries and initializes an in-memory SQLite database engine.
+## 📊 Visualization Dashboard
+Final 2x2 dashboard includes:  
+- Email volume trends  
+- Custodian distributions  
+- Document type breakdown  
+- Error log summaries  
 
-Data Generation: A custom function generates a Pandas DataFrame containing 50,000 fake e-discovery records.
+---
 
-Database & ETL: The main DataFrame is broken down into normalized DataFrames (documents, custodians, emails), and the data is loaded into the corresponding SQL tables.
+## 🛠️ Tech Stack
+- **Python 3**  
+- **Pandas** – Data manipulation  
+- **SQLAlchemy** – ORM + SQLite  
+- **Faker** – Data simulation  
+- **NLTK** – Text preprocessing  
+- **Matplotlib / Seaborn** – Visualization  
 
-Cleaning & Preprocessing: The data is cleaned to handle missing values and duplicates. The email body text is processed to create a Cleaned Body Text column for analysis.
+---
 
-Quality Checks: The script iterates through the data to find quality issues (e.g., missing sender/recipient IDs). All identified errors are systematically logged in the Error_Log table.
+## 🚀 How to Run
 
-Analysis & Visualization: The database is queried to gather summary statistics. Matplotlib and Seaborn are used to plot the analytical dashboard.
+### 1️⃣ Prerequisites
+- Python 3.x  
+- Jupyter Notebook or JupyterLab  
 
-Export: The final cleaned dataset is saved to disk in three different file formats for downstream use.
-
-🗂️ Database Schema
-The data is structured into four main tables to ensure normalization and efficiency:
-
-Documents: Stores basic metadata about each document.
-
-Document ID (Primary Key)
-
-Document Date
-
-File Type
-
-Custodians: Stores a unique list of all data custodians (individuals).
-
-Custodian ID (Primary Key)
-
-Custodian Name
-
-Emails: Contains the core email information, linked to documents and custodians.
-
-Email ID (Primary Key)
-
-Document ID (Foreign Key to Documents)
-
-Sender ID (Foreign Key to Custodians)
-
-Recipient ID (Foreign Key to Custodians)
-
-Subject, Body Text, Cleaned Body Text
-
-Error_Log: Captures all data quality issues found during the process.
-
-Error ID (Primary Key)
-
-Document ID
-
-Error Type
-
-Description
-
-📊 Visualization Dashboard
-The final analysis is presented in a 2x2 dashboard, providing a quick overview of the dataset's composition and timeline.
-
-🛠️ Technologies Used
-Python 3
-
-Pandas: For data manipulation and analysis.
-
-SQLAlchemy: For database interaction and object-relational mapping (ORM).
-
-Faker: For generating synthetic data.
-
-NLTK (Natural Language Toolkit): For text preprocessing.
-
-Matplotlib & Seaborn: For data visualization.
-
-🚀 How to Run
-Prerequisites: Ensure you have a Python 3 environment (like Anaconda or a virtual environment) and Jupyter Notebook/JupyterLab installed.
-
-Install Libraries: Install the required libraries using pip.
-
-Bash
-
+### 2️⃣ Install dependencies
+```bash
 pip install pandas sqlalchemy faker nltk matplotlib seaborn
-Download NLTK Data: The first time you run the script, it will need to download the stopwords and punkt packages from NLTK. This is handled automatically in the notebook.
-
-Execute the Notebook: Launch Jupyter and open the E_Discovery_Data_Processing_and_Analysis.ipynb file. Run the cells sequentially from top to bottom.
-
-📤 Output
-Upon successful execution, the script generates the following files in the project's root directory:
-
-processed_emails.csv: The cleaned email data in CSV format.
-
-processed_emails.parquet: A highly efficient, columnar storage format for the cleaned data.
-
-processed_emails.json: The cleaned email data in JSON Lines format.
